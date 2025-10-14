@@ -1,50 +1,43 @@
-import java.util.Scanner;
-
 public class ShippingFeeCalculator {
-    public static double calculateBaseFee(double weight) {
+
+    public static double calculateTotalFee(double weight, double distance, int customerType) {
+        double baseFee;
+        double distanceFee;
+        double discountRate;
+        double totalFee;
+
         if (weight <= 5) {
-            return 20000;
+            baseFee = 20000;
         } else if (weight <= 20) {
-            return 50000;
+            baseFee = 50000;
         } else {
-            return 100000;
+            baseFee = 100000;
         }
-    }
 
-    public static double calculateDistanceFee(double distance) {
-        double fee = 0;
         if (distance <= 5) {
-            fee += distance * 2000;
+            distanceFee = distance * 2000;
         } else if (distance <= 20) {
-            fee += 5 * 2000;
-            fee += (distance - 5) * 1500;
+            distanceFee = 5 * 2000 + (distance - 5) * 1500;
         } else {
-            fee += 5 * 2000;
-            fee += 15 * 1500;
-            fee += (distance - 20) * 1000;
+            distanceFee = 5 * 2000 + 15 * 1500 + (distance - 20) * 1000;
         }
-        return fee;
-    }
 
-    public static double getDiscountRate(int customerType) {
-        switch (customerType) {
-            case 1: return 0.0;
-            case 2: return 0.1;
-            case 3: return 0.2;
-            default: return 0.0;
+        if (customerType == 1) {
+            discountRate = 0.0;
+        } else if (customerType == 2) {
+            discountRate = 0.1;
+        } else if (customerType == 3) {
+            discountRate = 0.2;
+        } else {
+            discountRate = 0.0;
         }
+
+        totalFee = (baseFee + distanceFee) * (1 - discountRate);
+        return totalFee;
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        double weight = sc.nextDouble();
-        double distance = sc.nextDouble();
-        int customerType = sc.nextInt();
-        double baseFee = calculateBaseFee(weight);
-        double distanceFee = calculateDistanceFee(distance);
-        double discount = getDiscountRate(customerType);
-        double totalFee = (baseFee + distanceFee) * (1 - discount);
-        System.out.printf("%.0f\n", totalFee);
-        sc.close();
+        double result = calculateTotalFee(10, 25, 2);
+        System.out.printf("%.0f\n", result);
     }
 }
