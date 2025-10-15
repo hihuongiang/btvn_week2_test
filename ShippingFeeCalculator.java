@@ -26,10 +26,8 @@ public class ShippingFeeCalculator {
             discountRate = 0.0;
         } else if (customerType == 2) {
             discountRate = 0.1;
-        } else if (customerType == 3) {
-            discountRate = 0.2;
         } else {
-            discountRate = 0.0;
+            discountRate = 0.2;
         }
 
         totalFee = (baseFee + distanceFee) * (1 - discountRate);
